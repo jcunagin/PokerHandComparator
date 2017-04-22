@@ -26,7 +26,7 @@ public class Hand {
 	/**
 	 * sorts the given hand by suit
 	 */
-	private void sort(){
+	private void sort(){ //Hands of cards tend to be small, insertion sort should not impact performance
 		if(!this.isEmpty()){
 			ArrayList<Card> sortedCards = new ArrayList<Card>();
 			Iterator<Card> items = this.cards.iterator();
@@ -53,7 +53,6 @@ public class Hand {
 	}
 	
 	/**
-	 * Checks if hand is holding no cards
 	 * @return True if there are no card objects in the hand object
 	 */
 	public boolean isEmpty(){
@@ -65,7 +64,6 @@ public class Hand {
 	}
 	
 	/**
-	 * Finds the card with the highest rank in the hand
 	 * @return Card object with the highest rank among Card objects in this, null if hand contains no cards
 	 */
 	public Card getHighCard(){
@@ -78,7 +76,6 @@ public class Hand {
 	}
 	
 	/**
-	 * Finds the card with the lowest rank in the hand
 	 * @return Card object with the lowest rank among Card objects in this
 	 */
 	public Card getLowCard(){
@@ -91,7 +88,6 @@ public class Hand {
 	}
 	
 	/**
-	 * Looks for Cards with matching ranks in this hand
 	 * @return Map<Character,Integer>, with the Character representing the rank, Integer occurrences of that rank
 	 */
 	public Map<Character,Integer> countRankMatches(){
@@ -111,7 +107,6 @@ public class Hand {
 	}
 	
 	/**
-	 * Finds all cards that have the same rank as the given card
 	 * @param c
 	 * @return a Hand containing all Cards with a matching rank
 	 */
@@ -128,7 +123,6 @@ public class Hand {
 	}
 	
 	/**
-	 * adds a card to an existing hand
 	 * @param c
 	 */
 	public void add(Card c){
@@ -154,7 +148,23 @@ public class Hand {
 	
 	
 	/**
-	 * Returns true if both hands hold the same cards, regardless of card order
+	 * @param c
+	 * @return true if hand contains a card with a matching suit and rank
+	 */
+	public boolean contains(Card c){
+		boolean result = false;
+		Iterator<Card> items = this.cards.iterator();
+		while(items.hasNext()){
+			Card compare = items.next();
+			if(compare.getRank() == c.getRank() && compare.getSuit() == c.getSuit()){
+				result = true; //identical card found
+				break;
+			}
+		}
+		return result;
+	}
+	
+	/**
 	 * @param comparison
 	 * @return true if both hands have the same cards
 	 */
@@ -191,7 +201,6 @@ public class Hand {
 	}
 	
 	/**
-	 * Counts matching suits in the given hand.
 	 * Generates a Map where the keys correspond to suits and values how many times that suit is represented
 	 * @return Map<Character, Integer> corresponding to suits and their frequency
 	 */
@@ -212,7 +221,6 @@ public class Hand {
 	}
 	
     /**
-     * Finds all cards in the given hand that match the suit of c and returns them in a new hand
      * @param c the card to be compared to
      * @return A hand containing all cards of the given hand that match the suit of c
      */
@@ -228,5 +236,20 @@ public class Hand {
 		return matches;
     }
 	
+	/**
+	 * 
+	 * @return The number of cards in this
+	 */
+	public int size() {
+		return this.cards.size();
+	}
 	
+	/**
+	 * 
+	 * @return Generates and array containing all cards in the hand
+	 */
+	public Card[] getCards(){
+		Card[] output = new Card[this.cards.size()];
+		return this.cards.toArray(output);
+	}
 }

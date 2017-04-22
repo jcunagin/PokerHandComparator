@@ -2,9 +2,40 @@ package cardUtilities;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CardTest {
+	
+	private static final ByteArrayOutputStream errOutput = new ByteArrayOutputStream();
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		System.setErr(new PrintStream(errOutput));
+	}
+	
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		System.setErr(null);
+	}
+
+	@Test
+	public void testCardErrRank(){
+		Card test = new Card('V', 'C');
+		assertEquals("V is not a valid Rank", errOutput.toString());
+		errOutput.reset();
+	}
+	
+	@Test
+	public void testCardErrSuit(){
+		Card test = new Card('2', 'G');
+		assertEquals("G is not a valid Suit", errOutput.toString());
+		errOutput.reset();
+	}
 	
 	@Test
 	public void testCardRank2() {
@@ -296,6 +327,7 @@ public class CardTest {
 		Card test = new Card('A', 'H');
 		assertEquals(test.toString(), "AH");
 	}
+	
 	
 	@Test
 	public void testEquals() {

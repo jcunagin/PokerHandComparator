@@ -7,7 +7,7 @@ package cardUtilities;
  * @author Jacob Cunagin
  *
  */
-class Card {
+public class Card {
 	//valid ranks for cards in a deck
 	private static final char[] RANKS = {'2','3','4','5','6','7','8',
 			'9','T','J','Q','K','A'};
@@ -23,8 +23,6 @@ class Card {
 	 * 
 	 * @param givenRank
 	 * @param givenSuit
-	 * @throws InvalidRankException
-	 * @throws InvalidSuitException
 	 */
 	public Card(char givenRank, char givenSuit){
 	
@@ -32,24 +30,25 @@ class Card {
 			if(Card.isValidRank(givenRank)){
 				rank = givenRank;
 			}else{
-				throw new InvalidRankException(givenRank);
+				throw new IllegalArgumentException();
 			}
 			
+		}catch(IllegalArgumentException e){
+			System.err.print(givenRank + " is not a valid Rank");
+		}
+		
+		try {
 			if(Card.isValidSuit(givenSuit)){
 				suit = givenSuit;
 			}else{
-				throw new InvalidSuitException(givenSuit);
+				throw new IllegalArgumentException();
 			}
-		}catch(InvalidRankException e){
-			System.out.println(givenRank + " is not a valid Rank");
-		}catch(InvalidSuitException e){
-			System.out.println(givenSuit + "is not a valid Suit");
+		}catch(IllegalArgumentException e){
+			System.err.print(givenSuit + " is not a valid Suit");
 		}
-		
 	}
 	
 	/**
-	 * Determines if the given char is a valid suit in a deck of cards 
 	 * @param suit
 	 * @return true if the provided char is in the set of valid suits, false if otherwise
 	 */
@@ -65,7 +64,6 @@ class Card {
 	}
 	
 	/**
-	 * Determines if the given char is a valid rank in a deck of cards
 	 * @param rank
 	 * @return true if the provided char is the the set of valid ranks, false if otherwise
 	 */
@@ -81,7 +79,6 @@ class Card {
 	}
 	
 	/**
-	 * compares the ranks between two cards
 	 * 
 	 * @param comparison
 	 * @return the rank of comparison - the rank of this
@@ -103,7 +100,6 @@ class Card {
 	}
 	
 	/**
-	 * compares the suits of two cards
 	 * @param comparison
 	 * @return true if the suits are the same, false if otherwise
 	 */
@@ -113,8 +109,7 @@ class Card {
 	}
 	
 	/**
-	 * Converts the card to a string
-	 * @return a char representation of the card
+	 * @return a string representation of the card
 	 */
 	public String toString(){
 		String result = String.valueOf(this.rank) 
@@ -123,7 +118,6 @@ class Card {
 	}
 	
 	/**
-	 * Checks two cards for identical suits and ranks
 	 * @param comparison
 	 * @return false unless cards have equal suit and rank
 	 */
@@ -136,7 +130,6 @@ class Card {
 	}
 	
 	/**
-	 * Returns the rank of the card as a char
 	 * @return The card rank
 	 */
 	public char getRank(){
@@ -144,7 +137,6 @@ class Card {
 	}
 	
 	/**
-	 * Returns the suit of the card as a char
 	 * @return The card suit
 	 */
 	public char getSuit(){

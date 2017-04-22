@@ -406,7 +406,7 @@ public class HandTest {
 	}
 	
 	@Test
-	public void testEqualsTrueIdenticalObjects(){
+	public void testEqualsTrueIdenticalObjectsSameOrder(){
 		Card c1 = new Card('4', 'C');
 		Card c2 = new Card('4', 'H');
 		Card c3 = new Card('4', 'S');
@@ -422,7 +422,7 @@ public class HandTest {
 		assertTrue(test.equals(test2));
 	}
 	
-	public void testEqualsTrueDifferentOrder() {
+	public void testEqualsTrueIdenticalObjectsDifferentOrder() {
 		Card c1 = new Card('4', 'C');
 		Card c2 = new Card('4', 'H');
 		Card c3 = new Card('4', 'S');
@@ -626,6 +626,95 @@ public class HandTest {
 		Hand result = new Hand(c1, c4);
 		Card c6 = new Card('2', 'D');
 		assertTrue(result.equals(test.getSuitMatches(c6)));
+	}
+	
+	@Test
+	public void testContainsTrue() {
+		Card c1 = new Card('2', 'D');
+		Card c2 = new Card('2', 'H');
+		Card c3 = new Card('5', 'S');
+		Card c4 = new Card('4', 'D');
+		Card c5 = new Card('J', 'C');
+		Hand test = new Hand(c1,c2,c3,c4,c5);
+		Card c6 = new Card('2', 'D');
+		assertTrue(test.contains(c6));
+	}
+	
+	@Test
+	public void testContainsFalseSameSuit() {
+		Card c1 = new Card('2', 'D');
+		Card c2 = new Card('2', 'H');
+		Card c3 = new Card('5', 'S');
+		Card c4 = new Card('4', 'D');
+		Card c5 = new Card('J', 'C');
+		Hand test = new Hand(c1,c2,c3,c4,c5);
+		Card c6 = new Card('7', 'D');
+		assertFalse(test.contains(c6));
+	}
+	
+	@Test
+	public void testContainsFalseSameRank() {
+		Card c1 = new Card('2', 'D');
+		Card c2 = new Card('2', 'H');
+		Card c3 = new Card('5', 'D');
+		Card c4 = new Card('4', 'D');
+		Card c5 = new Card('J', 'C');
+		Hand test = new Hand(c1,c2,c3,c4,c5);
+		Card c6 = new Card('5', 'S');
+		assertFalse(test.contains(c6));
+	}
+	
+	@Test
+	public void testContainsFalseNoSimilarities() {
+		Card c1 = new Card('2', 'D');
+		Card c2 = new Card('2', 'H');
+		Card c3 = new Card('5', 'D');
+		Card c4 = new Card('4', 'D');
+		Card c5 = new Card('J', 'C');
+		Hand test = new Hand(c1,c2,c3,c4,c5);
+		Card c6 = new Card('7', 'S');
+		assertFalse(test.contains(c6));
+	}
+	
+	@Test
+	public void testSize0() {
+		Hand test = new Hand();
+		assertEquals(0, test.size());
+	}
+	
+	@Test
+	public void testSizeNot0() {
+		Card c1 = new Card('2', 'D');
+		Card c2 = new Card('2', 'H');
+		Card c3 = new Card('5', 'D');
+		Card c4 = new Card('4', 'D');
+		Card c5 = new Card('J', 'C');
+		Hand test = new Hand(c1,c2,c3,c4,c5);
+		
+		assertEquals(5, test.size());
+	}
+	
+	@Test
+	public void testGetCardsEmpty(){
+		Hand test = new Hand();
+		Card[] testCards = test.getCards();
+		assertEquals(0, testCards.length);
+	}
+	
+	@Test
+	public void testGetCardsNotEmpty() {
+		Card c1 = new Card('2', 'D');
+		Card c2 = new Card('2', 'H');
+		Card c3 = new Card('4', 'D');
+		Card c4 = new Card('5', 'D');
+		Card c5 = new Card('J', 'C');
+		Hand test = new Hand(c1,c2,c3,c4,c5);
+		Card[] testCards = test.getCards();
+		assertEquals(c1, testCards[0]);
+		assertEquals(c2, testCards[1]);
+		assertEquals(c3, testCards[2]);
+		assertEquals(c4, testCards[3]);
+		assertEquals(c5, testCards[4]);
 	}
 }
 	
